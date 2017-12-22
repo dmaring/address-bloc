@@ -8,12 +8,13 @@ class MenuController
     end
 
     def main_menu
-        puts "Main Menu - #{address_book.entries} entries"
+        puts "Main Menu - #{address_book.entries.count} entries"
         puts "1 - View all entries"
         puts "2 - Create an entry"
         puts "3 - Search for an entry"
         puts "4 - Import entries from a CSV"
-        puts "5 - Exit"
+        puts "5 - View entry number n"
+        puts "6 - Exit"
         print "Enter your selection: "
 
         # gets retrieves from standard input
@@ -37,6 +38,10 @@ class MenuController
                 read_csv
                 main_menu
             when 5
+                system "clear"
+                entry_n_submenu
+                main_menu
+            when 6
                 puts "Good-bye!"
                 # 0 signals the program is exiting withou an error
                 exit(0)
@@ -61,10 +66,32 @@ class MenuController
         puts "End of entries"
     end
 
+    def entry_n_submenu
+        # clears the screen
+        puts "View Entry Number n"
+
+        # prompt user for each Entry attribute
+        print "Entry number: "
+        requested_entry = gets.chomp.to_i
+
+        if requested_entry < address_book.entries.count
+            puts address_book.entries[requested_entry]
+            print "Press enter to return to the main menu"
+            gets.chomp
+            system "clear"
+        else
+            puts "**Sorry, #{requested_entry} is not a vaild input**"
+            entry_n_submenu
+        end
+
+
+
+    end
+
     def create_entry
         # clears the screen
         system "clear"
-        puts "New AddresBloc Entry"
+        puts "New AddressBloc Entry"
 
         # prompt user for each Entry attribute
         print "Name: "
@@ -87,11 +114,12 @@ class MenuController
     def read_csv
     end
 
-    def entry_submenu
+    def entry_submenu(entry)
         puts "n - next entry"
         puts "d - delete entry"
         puts "e - edit this entry"
         puts "m - return to main menu"
+        print "Enter your selection: "
 
         # chomp removes any trailing whitespace from the string gets returns
         selection = gets.chomp
