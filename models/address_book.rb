@@ -53,7 +53,9 @@ class AddressBook
         end
 
         return nil
-
     end
 
+    def delete_entries
+        entries.clear
+    end
 end

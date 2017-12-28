@@ -15,6 +15,7 @@ class MenuController
         puts "4 - Import entries from a CSV"
         puts "5 - View entry number n"
         puts "6 - Exit"
+        puts "7 - Nuke all entries!"
         print "Enter your selection: "
 
         # gets retrieves from standard input
@@ -46,6 +47,10 @@ class MenuController
                 # 0 signals the program is exiting withou an error
                 exit(0)
 
+            when 7
+                system "clear"
+                nuke_entries
+                main_menu
             # catches invalid entries and redirects to main menu
             else
                 system "clear"
@@ -216,6 +221,25 @@ class MenuController
                 puts "#{selection} is not a valid input"
                 puts entry.to_s
                 search_submenu(entry)
+        end
+    end
+
+    def nuke_entries
+        puts "Do you really want to nuke all the entries? y/n"
+        selection = gets.chomp
+
+        if selection == "y"
+            nuke_entries
+            puts "All entries were deleted! Press return to continue."
+            enter = gets.chomp
+            system "clear"
+            main_menu
+        else
+            puts "Entries will not be deleted!"
+            puts "Press return to continue."
+            enter = gets.chomp
+            system "clear"
+            main_menu
         end
     end
 end
